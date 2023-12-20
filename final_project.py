@@ -1,27 +1,19 @@
 # final project
 
 # Song Recommender
-# this program imports a database of songs from the Billboard Hot 100 charts
-# data from Billboard will be compiled into a dictionary
-# then it recommends you a song based on a genre you input
-# the user input will access the dictionary
-# after you choose several songs, that data will be appended to a list
-# and the program will create a file including a personalized playlist
-
-# webscrape for a table of information (10.1)
-# store data in dictionary (5.15-9)
-# JSON is represented as dictionary before stringified
-
-# billboard
-
 # this program scrapes Wikipedia's "List of Billboard Hot 100 number ones of 2023"
-# and compiles the list of top songs this year into a dataframe
+# and compiles the list of top songs this year into a dataframe then creates csv
+# then imports data from csv and compiles into a dictionary
+# the program recommends you a song based on a genre you input
+# the user input will access the dictionary
+# after you choose several songs, that data will be made into a tuple
+# and the tuple will be made into a file including a personalized playlist 
 
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import re
-import random
+import random 
 
 # using beautifulsoup to parse website content
 # checklist item 10.1-2
@@ -70,30 +62,84 @@ songDict = outerDict['Song']
 # checklist item 5.15
 songGenre = {
     "Christmas": [], # values are blank to append songs from billboard
-    "Pop": [],
+    "Pop": [], # checklist 5.8-9 values in for loop below are appended to this string
     "Country": [],
     "Kpop": [],
     "Rap": [],
 }
 
 # adding values from billboard into dictionary
+# checklist item 5.18-19
 for key, values in songDict.items():
     if key in {0,18}: # the best way to do this was manually input the keys of the christmas songs
         songGenre["Christmas"].append(values) # if key matches specified number, songs from billboard are added to genre dictionary
     elif key in {1, 2, 3, 6, 7, 12, 15 ,16}: # the rest of these work the same for each key in genre dictionary
-        songGenre["Pop"].append(values)
+        songGenre["Pop"].append(values) # checklist 5.8-9
     elif key in {4, 9, 10, 11}:
         songGenre["Country"].append(values)
+        print(type(values))
     elif key in {5, 8}:
         songGenre["Kpop"].append(values)
     elif key in {13, 14}:
         songGenre["Rap"].append(values)
 print(songGenre)
-    
-# an ask user if they want multiple songs from an artist
-# have the value as a list and append/remove items (5.9,11)
 
-# can make billboard.py into a module to import (3.17)
+# empty list to add users given songs to
+playlist = []
+
+# ask for user input for genre
+adding = input("Would you like to keep adding songs?\nYes\nNo\n")
+
+while adding == "Yes":
+    genre = input("What genre do you prefer?\n1: Christmas\n2: Pop\n3: Country\n4: Kpop\n5: Rap\n")
+    
+    # return random value from inputed genre
+    if genre == "1":
+        christmasResult = songGenre.get("Christmas", [])
+        randomChristmas = random.choice(christmasResult)
+        print(randomChristmas)
+        playlist.append(randomChristmas)
+    elif genre == "2":
+        popResult = songGenre.get("Pop", [])
+        randomPop = random.choice(popResult)
+        print(randomPop)
+        playlist.append(randomPop)
+    elif genre == "3":
+        countryResult = songGenre.get("Country", [])
+        randomCountry = random.choice(countryResult)
+        print(randomCountry)
+        playlist.append(randomCountry)
+    elif genre == "4":
+        kpopResult = songGenre.get("Kpop", [])
+        randomKpop = random.choice(kpopResult)
+        print(randomKpop)
+        playlist.append(randomKpop)
+    elif genre == "5":
+        rapResult = songGenre.get("Rap", [])
+        randomRap = random.choice(rapResult)
+        print(randomRap)
+        playlist.append(randomRap)
+    else:
+        print("Songs chosen. Your playlist is being created.")
+        
+        # remove playlist duplicates
+        for item in playlist:
+            while playlist.count(item) > 1:
+                playlist.remove(item)
+
+        print(playlist)
+        break
+if adding == "No":
+    print("Songs chosen. Your playlist is being created.")
+
+    # remove playlist duplicates
+    for item in playlist:
+            while playlist.count(item) > 1:
+                playlist.remove(item)
+
+    print(playlist)
+
+
 
 # can write the results out to file, like make them a list of songs (3.20)
 # raise error for unknown genre (4.9)
