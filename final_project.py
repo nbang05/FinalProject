@@ -88,10 +88,11 @@ print(songGenre)
 playlist = []
 
 # ask for user input for genre
+# checklist item 3.19
 adding = input("Would you like to keep adding songs?\nYes\nNo\n")
 
 while adding == "Yes":
-    genre = input("What genre do you prefer?\n1: Christmas\n2: Pop\n3: Country\n4: Kpop\n5: Rap\n")
+    genre = input("What genre do you prefer?\n1: Christmas\n2: Pop\n3: Country\n4: Kpop\n5: Rap\nStop: Ready to create playlist.\n")
     
     # return random value from inputed genre
     if genre == "1":
@@ -119,16 +120,23 @@ while adding == "Yes":
         randomRap = random.choice(rapResult)
         print(randomRap)
         playlist.append(randomRap)
-    else:
+    elif genre == "Stop":
         print("Songs chosen. Your playlist is being created.")
         
         # remove playlist duplicates
+        # checklist item 5.11
         for item in playlist:
             while playlist.count(item) > 1:
                 playlist.remove(item)
 
         print(playlist)
         break
+    else:  
+        # raise syntax error for possible misspellings
+        # checklist item 4.9
+        raise SyntaxError("There is a misspelling")
+
+            
 if adding == "No":
     print("Songs chosen. Your playlist is being created.")
 
@@ -137,12 +145,9 @@ if adding == "No":
             while playlist.count(item) > 1:
                 playlist.remove(item)
 
-    print(playlist)
+# write out playlist to a new file
+# checklist item 3.20
+with open('/Users/naobae/Library/FinalProject/playlist.txt', 'w') as f:
+    print(playlist, file = f)
 
-
-
-# can write the results out to file, like make them a list of songs (3.20)
 # raise error for unknown genre (4.9)
-# can you make pandas data into dictionary?
-# need to learn licensing
-# once user has curated a playlist, use numpy to calculate how many songs each time add?
