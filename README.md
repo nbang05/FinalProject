@@ -20,7 +20,7 @@ import random
 
 Running the Script
 
-The main script of the project is final_project.py and can be run from the command line with the command:
+The project is final_project.py and can be run from the command line with the command: (checklist item 1.5)
 
 python final_project.py
 
