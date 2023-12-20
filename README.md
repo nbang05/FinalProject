@@ -1,6 +1,6 @@
 Song Recommender
 
-This project imports a database of songs from a Wikipedia page including the Billboard Hot 100 chart 2023. Data from Billboard is compiled into a dictionary and organized by genre, then the program will ask to input a genre out of the five listed. The user input will access the dictionary and output a randomized song from that genre. After choosing several songs, that data will be made into a tuple, and the tuple will made into a file as a personalized playlist.
+This project imports a database of songs from a Wikipedia page including the Billboard Hot 100 chart 2023. Data from Billboard is compiled into a dictionary and organized by genre, then the program will ask to input a genre out of the five listed. The user input will access the dictionary and output a randomized song from that genre. Each randomized song will be appended to a playlist list and exported as a text file.
 
 User Requirements
 

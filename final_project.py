@@ -6,8 +6,7 @@
 # then imports data from csv and compiles into a dictionary
 # the program recommends you a song based on a genre you input
 # the user input will access the dictionary
-# after you choose several songs, that data will be made into a tuple
-# and the tuple will be made into a file including a personalized playlist 
+# each song will be appended to a list and exported as a text file 
 
 from bs4 import BeautifulSoup
 import requests
@@ -35,7 +34,10 @@ df = pd.DataFrame(columns = titles)
 columnData = body.find_all('tr')[1:]
 
 # finds song in specified column from each row
-for row in columnData: # iterates through each row in the whole table, appends song title each time it loops through 
+for row in columnData: 
+    # docstring
+    # checklist item 6.3-4
+    '''iterates through each row in the whole table, appends song title each time it loops through '''
     songTitle = row.find('a', title=re.compile(r'.*')) # finds song title
     
     # convert titles to text and append to dataframe
@@ -71,9 +73,10 @@ songGenre = {
 # adding values from billboard into dictionary
 # checklist item 5.18-19
 for key, values in songDict.items():
+    '''if key matches specified number, songs from billboard are added to genre dictionary'''
     if key in {0,18}: # the best way to do this was manually input the keys of the christmas songs
-        songGenre["Christmas"].append(values) # if key matches specified number, songs from billboard are added to genre dictionary
-    elif key in {1, 2, 3, 6, 7, 12, 15 ,16}: # the rest of these work the same for each key in genre dictionary
+        songGenre["Christmas"].append(values) # the rest of these work the same for each key in genre dictionary
+    elif key in {1, 2, 3, 6, 7, 12, 15 ,16}: 
         songGenre["Pop"].append(values) # checklist 5.8-9
     elif key in {4, 9, 10, 11}:
         songGenre["Country"].append(values)
@@ -94,12 +97,12 @@ adding = input("Would you like to keep adding songs?\nYes\nNo\n")
 while adding == "Yes":
     genre = input("What genre do you prefer?\n1: Christmas\n2: Pop\n3: Country\n4: Kpop\n5: Rap\nStop: Ready to create playlist.\n")
     
-    # return random value from inputed genre
+    '''returns random value from inputed genre'''
     if genre == "1":
-        christmasResult = songGenre.get("Christmas", [])
-        randomChristmas = random.choice(christmasResult)
+        christmasResult = songGenre.get("Christmas", []) # gets values from key "christmas" ingenre dictionary
+        randomChristmas = random.choice(christmasResult) # picks random song from the values
         print(randomChristmas)
-        playlist.append(randomChristmas)
+        playlist.append(randomChristmas) # appends that song into the playlist
     elif genre == "2":
         popResult = songGenre.get("Pop", [])
         randomPop = random.choice(popResult)
@@ -120,14 +123,14 @@ while adding == "Yes":
         randomRap = random.choice(rapResult)
         print(randomRap)
         playlist.append(randomRap)
-    elif genre == "Stop":
+    elif genre == "Stop": # if user wants to stop adding songs
         print("Songs chosen. Your playlist is being created.")
         
         # remove playlist duplicates
         # checklist item 5.11
-        for item in playlist:
-            while playlist.count(item) > 1:
-                playlist.remove(item)
+        for item in playlist: # iterates through songs in playlist
+            while playlist.count(item) > 1: # if there is more than one of the same iten
+                playlist.remove(item) # that item is removed from playlist
 
         print(playlist)
         break
@@ -140,7 +143,7 @@ while adding == "Yes":
 if adding == "No":
     print("Songs chosen. Your playlist is being created.")
 
-    # remove playlist duplicates
+    # remove playlist duplicates (same as above)
     for item in playlist:
             while playlist.count(item) > 1:
                 playlist.remove(item)
@@ -149,5 +152,3 @@ if adding == "No":
 # checklist item 3.20
 with open('/Users/naobae/Library/FinalProject/playlist.txt', 'w') as f:
     print(playlist, file = f)
-
-# raise error for unknown genre (4.9)
