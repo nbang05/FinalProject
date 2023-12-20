@@ -25,6 +25,7 @@ outerDict = billboard.to_dict()
 songDict = outerDict['Song']
 
 # create a dictionary of genres
+# checklist item 5.15
 songGenre = {
     "Christmas": [], # values are blank to append songs from billboard
     "Pop": [],
